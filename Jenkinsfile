@@ -8,7 +8,7 @@ node {
   }
 
   stage('Check') {
-        sh "./gradlew detekt check ktlint"
+        sh "./gradlew detekt check ktlintCheck"
   }
 
   stage('Report') {
