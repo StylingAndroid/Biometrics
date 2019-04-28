@@ -1,0 +1,51 @@
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.stylingandroid.biometrics"
+        minSdkVersion 28
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation libraries.kotlin
+    implementation libraries.appcompat
+    implementation libraries.corektx
+    implementation libraries.constraintlayout
+    implementation libraries.material
+}
+
+
+detekt {
+    version = detektVersion
+    failFast = false
+    config = files("$projectDir/detekt.yml")
+    reports {
+        xml {
+            destination = file("$project.buildDir/reports/detekt.xml")
+        }
+    }
+    filters = ".*test.*,.*/resources/.*,.*/tmp/.*"
+}
+
+ktlint {
+    android = true
+    version = ktlintVersion
+    ignoreFailures = true
+    reporters = [ReporterType.PLAIN_GROUP_BY_FILE, ReporterType.CHECKSTYLE]
+    outputToConsole = true
+}
