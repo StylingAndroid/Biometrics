@@ -8,4 +8,5 @@
   <string name="biometric_prompt_cancelled">Authentication canceled</string>
   <string name="biometric_prompt_logout">Logout</string>
   <string name="authenticating">Authenticating&#8230;</string>
+  <string name="biometric_prompt_no_hardware">No Biometric hardware was found</string>
 </resources>

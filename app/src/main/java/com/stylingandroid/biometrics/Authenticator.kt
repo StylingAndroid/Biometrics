@@ -8,7 +8,8 @@ import timber.log.Timber
 
 internal class Authenticator(
     private val context: Context,
-    private val callback: (AuthenticationResult) -> Unit
+    private val callback: (AuthenticationResult) -> Unit,
+    private val biometricChecker: BiometricChecker = BiometricChecker.getInstance(context)
 ) {
 
     private val biometricPrompt: BiometricPrompt = BiometricPrompt.Builder(context)
@@ -24,7 +25,14 @@ internal class Authenticator(
         .build()
 
     fun authenticate() {
-        biometricPrompt.authenticate(cancellationSignal, context.mainExecutor, authCallback)
+        if (!biometricChecker.hasBiometrics) {
+            callback(AuthenticationResult.UnrecoverableError(
+                0,
+                context.getString(R.string.biometric_prompt_no_hardware)
+            ))
+        } else {
+            biometricPrompt.authenticate(cancellationSignal, context.mainExecutor, authCallback)
+        }
     }
 
     private val cancellationSignal = CancellationSignal()
