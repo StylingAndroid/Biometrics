@@ -9,7 +9,7 @@ android {
     defaultConfig {
         applicationId "com.stylingandroid.biometrics"
         minSdkVersion 28
-        targetSdkVersion 'Q'
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
     }

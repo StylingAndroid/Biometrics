@@ -17,8 +17,8 @@ sealed class BiometricChecker {
     ) : BiometricChecker() {
 
         private val availableCodes = listOf(
-            BiometricManager.BIOMETRIC_SUCCESS,
-            BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED
+                BiometricManager.BIOMETRIC_SUCCESS,
+                BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED
         )
 
         override val hasBiometrics: Boolean
@@ -26,8 +26,10 @@ sealed class BiometricChecker {
 
         companion object {
 
-            fun getInstance(context: Context): QBiometricChecker =
-                QBiometricChecker(context.getSystemService(BiometricManager::class.java))
+            fun getInstance(context: Context): QBiometricChecker? =
+                context.getSystemService(BiometricManager::class.java)?.let {
+                    QBiometricChecker(it)
+                }
         }
     }
 
@@ -42,10 +44,12 @@ sealed class BiometricChecker {
 
         companion object {
 
-            fun getInstance(context: Context): LegacyBiometricChecker =
-                LegacyBiometricChecker(context.getSystemService(
-                    android.hardware.fingerprint.FingerprintManager::class.java)
-                )
+            fun getInstance(context: Context): LegacyBiometricChecker? =
+                    context.getSystemService(
+                            android.hardware.fingerprint.FingerprintManager::class.java
+                    )?.let {
+                        LegacyBiometricChecker(it)
+                    }
         }
     }
 
@@ -65,8 +69,8 @@ sealed class BiometricChecker {
                     QBiometricChecker.getInstance(context)
                 Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ->
                     LegacyBiometricChecker.getInstance(context)
-                else -> DefaultBiometricChecker()
-            }
+                else -> null
+            } ?: DefaultBiometricChecker()
         }
     }
 }
