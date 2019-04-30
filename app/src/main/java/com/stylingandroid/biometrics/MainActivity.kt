@@ -20,14 +20,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun handleResult(result: AuthenticationResult) {
         when (result) {
-            is AuthenticationResult.Success -> {
+            is AuthenticationResult.Success ->
                 displayFragment(SuccessFragment::class.java) {
                     it.logout = ::authenticate
                 }
-            }
-            is AuthenticationResult.RecoverableError -> {
+            is AuthenticationResult.RecoverableError ->
                 displaySnackbar(result.message)
-            }
             is AuthenticationResult.UnrecoverableError -> displayErrorFragment(result.message)
             AuthenticationResult.Cancelled ->
                 displayErrorFragment(getString(R.string.biometric_prompt_cancelled))

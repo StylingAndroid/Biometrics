@@ -5,11 +5,11 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 'android-Q'
     defaultConfig {
         applicationId "com.stylingandroid.biometrics"
         minSdkVersion 28
-        targetSdkVersion 28
+        targetSdkVersion 'Q'
         versionCode 1
         versionName "1.0"
     }
@@ -33,7 +33,7 @@ dependencies {
 
 detekt {
     version = detektVersion
-    failFast = false
+    failFast = true
     config = files("$projectDir/detekt.yml")
     reports {
         xml {
@@ -46,7 +46,7 @@ detekt {
 ktlint {
     android = true
     version = ktlintVersion
-    ignoreFailures = true
+    ignoreFailures = false
     reporters = [ReporterType.PLAIN_GROUP_BY_FILE, ReporterType.CHECKSTYLE]
     outputToConsole = true
 }
