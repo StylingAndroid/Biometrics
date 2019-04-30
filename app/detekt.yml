@@ -142,6 +142,6 @@ comments:
 migration:
   active: true
   imports:
-    # your.package.Class: new.package.or.Class
-    # for example:
-    # io.gitlab.arturbosch.detekt.api.Rule: io.gitlab.arturbosch.detekt.rule.Rule
+  # your.package.Class: new.package.or.Class
+  # for example:
+  # io.gitlab.arturbosch.detekt.api.Rule: io.gitlab.arturbosch.detekt.rule.Rule

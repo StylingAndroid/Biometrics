@@ -3,4 +3,5 @@
   <issue id="IconLauncherShape">
     <ignore regexp=".*_background.png" />
   </issue>
+  <issue id="ObsoleteLintCustomCheck" severity="ignore" />
 </lint>

@@ -27,6 +27,7 @@ dependencies {
     implementation libraries.corektx
     implementation libraries.constraintlayout
     implementation libraries.material
+    implementation libraries.timber
 }
 
 
