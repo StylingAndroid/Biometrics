@@ -8,7 +8,7 @@ android {
     compileSdkVersion 'android-Q'
     defaultConfig {
         applicationId "com.stylingandroid.biometrics"
-        minSdkVersion 28
+        minSdkVersion 23
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -29,6 +29,7 @@ dependencies {
     implementation libraries.material
     implementation libraries.timber
     implementation libraries.biometric
+    implementation libraries.security
 }
 
 

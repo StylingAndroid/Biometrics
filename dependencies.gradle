@@ -9,6 +9,7 @@ ext {
             kotlin          : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version",
             material        : 'com.google.android.material:material:1.1.0-alpha07',
             timber          : 'com.jakewharton.timber:timber:4.7.1',
-            biometric       : 'androidx.biometric:biometric:1.0.0-alpha04'
+            biometric       : 'androidx.biometric:biometric:1.0.0-alpha04',
+            security        : 'androidx.security:security-crypto:1.0.0-alpha02'
     ]
 }
