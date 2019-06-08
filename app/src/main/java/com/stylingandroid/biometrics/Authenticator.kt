@@ -1,49 +1,17 @@
 package com.stylingandroid.biometrics
 
-import android.content.Context
-import android.content.DialogInterface
-import android.hardware.biometrics.BiometricPrompt
-import android.os.CancellationSignal
+import android.os.Handler
+import androidx.biometric.BiometricPrompt
+import androidx.fragment.app.FragmentActivity
 import timber.log.Timber
 
 internal class Authenticator(
-    private val context: Context,
+    private val fragmentActivity: FragmentActivity,
     private val callback: (AuthenticationResult) -> Unit,
-    private val biometricChecker: BiometricChecker = BiometricChecker.getInstance(context)
+    private val biometricChecker: BiometricChecker = BiometricChecker.getInstance(fragmentActivity)
 ) {
 
-    private val biometricPrompt: BiometricPrompt = BiometricPrompt.Builder(context)
-        .setTitle(context.getString(R.string.biometric_prompt_title))
-        .setNegativeButton(
-            context.getString(R.string.biometric_prompt_negative_text),
-            context.mainExecutor,
-            DialogInterface.OnClickListener { _, _ ->
-                Timber.d("Negative Button")
-                callback(AuthenticationResult.Cancelled)
-            }
-        )
-        .build()
-
-    fun authenticate() {
-        if (!biometricChecker.hasBiometrics) {
-            callback(AuthenticationResult.UnrecoverableError(
-                0,
-                context.getString(R.string.biometric_prompt_no_hardware)
-            ))
-        } else {
-            biometricPrompt.authenticate(cancellationSignal, context.mainExecutor, authCallback)
-        }
-    }
-
-    private val cancellationSignal = CancellationSignal()
-        .apply {
-            setOnCancelListener(cancelListener)
-        }
-
-    private val cancelListener = CancellationSignal.OnCancelListener {
-        Timber.d("Cancelled")
-        callback(AuthenticationResult.Cancelled)
-    }
+    private val handler = Handler()
 
     private val authCallback = object : BiometricPrompt.AuthenticationCallback() {
 
@@ -64,10 +32,27 @@ internal class Authenticator(
             Timber.d("Success")
             callback(AuthenticationResult.Success(result.cryptoObject))
         }
+    }
 
-        override fun onAuthenticationHelp(helpCode: Int, helpString: CharSequence) {
-            super.onAuthenticationHelp(helpCode, helpString)
-            Timber.d("Authentication help: $helpString")
+    private val biometricPrompt = BiometricPrompt(
+        fragmentActivity,
+        { runnable -> handler.post(runnable) },
+        authCallback
+    )
+
+    private val promptInfo = BiometricPrompt.PromptInfo.Builder()
+        .setTitle(fragmentActivity.getString(R.string.biometric_prompt_title))
+        .setNegativeButtonText(fragmentActivity.getString(R.string.biometric_prompt_negative_text))
+        .build()
+
+    fun authenticate() {
+        if (!biometricChecker.hasBiometrics) {
+            callback(AuthenticationResult.UnrecoverableError(
+                0,
+                fragmentActivity.getString(R.string.biometric_prompt_no_hardware)
+            ))
+        } else {
+            biometricPrompt.authenticate(promptInfo)
         }
     }
 }

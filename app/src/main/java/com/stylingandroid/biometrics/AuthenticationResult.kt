@@ -1,6 +1,6 @@
 package com.stylingandroid.biometrics
 
-import android.hardware.biometrics.BiometricPrompt
+import androidx.biometric.BiometricPrompt
 
 internal sealed class AuthenticationResult {
     internal data class Success(val cryptoObject: BiometricPrompt.CryptoObject?) :

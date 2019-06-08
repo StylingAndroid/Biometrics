@@ -3,11 +3,12 @@ ext {
     ktlintVersion = '0.31.0'
 
     libraries = [
-            appcompat       : 'androidx.appcompat:appcompat:1.1.0-alpha04',
-            corektx         : 'androidx.core:core-ktx:1.1.0-alpha05',
-            constraintlayout: 'androidx.constraintlayout:constraintlayout:2.0.0-alpha5',
+            appcompat       : 'androidx.appcompat:appcompat:1.1.0-beta01',
+            corektx         : 'androidx.core:core-ktx:1.2.0-alpha01',
+            constraintlayout: 'androidx.constraintlayout:constraintlayout:2.0.0-beta1',
             kotlin          : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version",
-            material        : 'com.google.android.material:material:1.0.0',
-            timber          : 'com.jakewharton.timber:timber:4.7.1'
+            material        : 'com.google.android.material:material:1.1.0-alpha07',
+            timber          : 'com.jakewharton.timber:timber:4.7.1',
+            biometric       : 'androidx.biometric:biometric:1.0.0-alpha04'
     ]
 }
