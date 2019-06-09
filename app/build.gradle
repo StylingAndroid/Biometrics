@@ -29,7 +29,6 @@ dependencies {
     implementation libraries.material
     implementation libraries.timber
     implementation libraries.biometric
-    implementation libraries.security
 }
 
 
